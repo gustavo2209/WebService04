@@ -38,5 +38,29 @@ namespace WebService04
             }
             return list;
         }
+
+        [WebMethod]
+        public List<object[]> Provincias(int iddepartamento)
+        {
+            List<object[]> list = new List<object[]>();
+
+            using (var db = new ModelPeru())
+            {
+                var query = from prov in db.provincias
+                            where prov.iddepartamento == iddepartamento
+                            select new
+                            {
+                                idprovincia = prov.idprovincia,
+                                provincia = prov.provincia
+                            };
+
+                foreach (var fil in query)
+                {
+                    list.Add(new object[] { fil.idprovincia, fil.provincia });
+                }
+            }
+
+            return list;
+        }
     }
 }
